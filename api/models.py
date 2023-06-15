@@ -1,40 +1,18 @@
-# from django.urls import reverse
+# from django.urls import reverseUser
 # from django.utils.text import slugify  # converts into slug format
 
 
 # Create your models here.
 from django.db import models
 from django.core.validators import MinValueValidator, MinLengthValidator, RegexValidator
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 
 
-class ScribbleQuest_User(AbstractUser):
-    FName = models.CharField(max_length=50, verbose_name="First Name")
-    LName = models.CharField(max_length=50, verbose_name="Last Name")
-    email = models.EmailField(max_length=254, verbose_name="Email", unique=True)
-    grade = models.IntegerField(MinValueValidator(0))
-    password = models.CharField(
-        max_length=125,
-        verbose_name="Password",
-        validators=[
-            MinLengthValidator(
-                8, message="Password must be at least 8 characters long."),
-            RegexValidator(
-                regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$',
-                message="Password must contain at least one letter and one number."
-            ),
-        ],
-    )
-
-
-    def __str__(self):
-        return f"{self.FName} {self.LName} {self.email}"
-
-    def save(self, *args, **kwargs):
-         # Hash the password before saving
-        self.password = make_password(self.password)
+class User(AbstractUser):
+    grade = models.IntegerField(MinValueValidator(0), null=True, blank=True)
     
+    def save(self, *args, **kwargs):
+   
         created = not self.pk  # Check if the User is being created for the first time
         super().save(*args, **kwargs)  # Save the User instance
 
@@ -49,7 +27,7 @@ class Maths_Score(models.Model):
                                 MinValueValidator(0)], verbose_name="Points")
     level = models.IntegerField(default=0, validators=[
                                 MinValueValidator(0)], verbose_name="Level")
-    user = models.OneToOneField(ScribbleQuest_User, on_delete=models.CASCADE, primary_key=True, related_name='maths_score')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='maths_score')
 
     def __str__(self):
         return f"{self.user} {self.point} {self.level}"
@@ -60,7 +38,7 @@ class Words_Score(models.Model):
                                 MinValueValidator(0)], verbose_name="Points")
     level = models.IntegerField(default=0, validators=[
                                 MinValueValidator(0)], verbose_name="Level")
-    user = models.OneToOneField(ScribbleQuest_User, on_delete=models.CASCADE, primary_key=True, related_name='words_score')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='words_score')
 
     def __str__(self):
         return f"{self.user} {self.point} {self.level}"
