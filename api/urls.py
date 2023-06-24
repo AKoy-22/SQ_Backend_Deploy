@@ -7,5 +7,5 @@ urlpatterns = [
     path('add-user/', views.addUser),
     path('login/', views.loginAuth),
     #path('predict-number/', views.predict_number),
-    path('process-image/', views.processImage)
+    path('process-image/<slug:imgslug>', views.processImage)
 ]

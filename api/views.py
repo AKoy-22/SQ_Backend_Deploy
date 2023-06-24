@@ -68,6 +68,16 @@ def predictNumber(processed_data):
     output = output[0]
     
     return output
+
+def predictLetter(processed_data):
+    model_path = os.path.join(
+        settings.BASE_DIR, 'static', 'models', 'emnist_model.h5')
+    model = keras.models.load_model(model_path)
+    result = model.predict(processed_data)
+    output = np.argmax(result, axis=1)
+    output = output[0]
+    
+    return output
     
  
 """  
@@ -157,7 +167,7 @@ def processImage(request):
 """
     
 @api_view(['POST'])
-def processImage(request):
+def processImage(request, imgslug):
     # Retrieve the image data from the request
     image_data = request.data.get('image')
 
@@ -224,12 +234,18 @@ def processImage(request):
 
         # Normalize pixel values
         pix = image.flatten() / 255.0
-
-        # Predict image
         X = tf.convert_to_tensor([pix], dtype=tf.float32)
-        reshaped_X = tf.reshape(X, [1, 28, 28])
-
-        prediction = predictNumber(reshaped_X)
-        predictions.append(prediction)
-
-    return Response({'predicted_numbers': predictions})
+        
+        if imgslug=="number":
+            # Predict number image
+            reshaped_X = tf.reshape(X, [1, 28, 28])
+            prediction = predictNumber(reshaped_X)
+            predictions.append(prediction)
+    
+        elif imgslug =="letter":
+            # Predict letter image
+            reshaped_X = tf.reshape(X, [1, 28, 28,1])
+            prediction = predictLetter(reshaped_X)
+            predictions.append(prediction)  
+    
+    return Response({'predictions': predictions})
