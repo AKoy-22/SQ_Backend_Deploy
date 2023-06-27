@@ -7,5 +7,6 @@ urlpatterns = [
     path('add-user/', views.addUser),
     path('login/', views.loginAuth),
     #path('predict-number/', views.predict_number),
-    path('process-image/<slug:imgslug>', views.processImage)
+    path('process-image/<slug:imgslug>', views.processImage),
+    path('get-random-word/<slug:grade>',views.getRandomWord )
 ]
