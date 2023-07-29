@@ -167,6 +167,7 @@ def processImage(request, imgslug):
     return Response({'predictions': predictions})
 
 @api_view(['GET'])
+# Sends a random word from fry.json list depending on the level
 def getRandomWord(request, grade):
     word_file_path = os.path.join(
         settings.BASE_DIR, 'static', 'words', 'fry.json')

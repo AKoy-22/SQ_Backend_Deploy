@@ -1,8 +1,6 @@
-# from django.urls import reverseUser
-# from django.utils.text import slugify  # converts into slug format
+# Data models - User, Math_Score and Words_Score tables
+# Creating a user will automatically initiate score tables with default score of 0
 
-
-# Create your models here.
 from django.db import models
 from django.core.validators import MinValueValidator, MinLengthValidator, RegexValidator
 from django.contrib.auth.models import AbstractUser
@@ -42,11 +40,3 @@ class Words_Score(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.point} {self.level}"
-
-
-
-# Iterate over user records
-# for user in User.objects.all():
-#     # Hash the password and update the user record
-#     user.password = make_password(user.password)
-#     user.save()

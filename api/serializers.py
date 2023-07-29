@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Maths_Score, Words_Score
+# Serialize and deserializing User objects to and from JSON format in Django Rest Framework (DRF)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
