@@ -1,0 +1,9 @@
+Django==4.2.1
+djangorestframework==3.14.0
+numpy==1.23.5
+tensorflow_intel==2.12.0
+sqlparse==0.4.4
+asgiref==3.6.0
+opencv-python==4.8.0
+psycopg2-binary==2.9.6
+gunicorn==21.2.0

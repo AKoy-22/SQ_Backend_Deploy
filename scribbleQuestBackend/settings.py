@@ -27,7 +27,8 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# added for Vercel deployment + json
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,9 +82,13 @@ WSGI_APPLICATION = 'scribbleQuestBackend.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'scribble_quest.sqlite3',
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '5pXexcgHEhA0qxF6qDmf',
+        'HOST': 'containers-us-west-46.railway.app',
+        'PORT': '6445',
     }
 }
 
@@ -128,7 +133,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
+#added for deployement 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -137,8 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+#Environment variable for deployment on vercel - frontend domain will be inserted
+FRONTEND_DOMAIN = os.getenv('FRONTEND_DOMAIN', 'http://localhost:3000')
+
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    FRONTEND_DOMAIN
+    #'http://localhost:3000',
 ]
 
 
