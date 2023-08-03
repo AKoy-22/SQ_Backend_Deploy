@@ -141,14 +141,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 #Environment variable for deployment on vercel - frontend domain will be inserted
-FRONTEND_DOMAIN = os.getenv('FRONTEND_DOMAIN', 'https://scrriblequest-production.up.railway.app')
+FRONTEND_DOMAIN = os.getenv('FRONTEND_DOMAIN', 'http://localhost:3000')
 
 CORS_ORIGIN_WHITELIST = [
-    FRONTEND_DOMAIN,
-    'http://localhost:3000',
+    FRONTEND_DOMAIN
+    #'http://localhost:3000',
 ]
 
 
